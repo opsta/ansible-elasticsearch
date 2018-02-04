@@ -1,0 +1,6 @@
+---
+- name: Install Elasticsearch
+  apt:
+    name: "{{ elasticsearch_apt_package }}"
+    state: present
+    update_cache: yes

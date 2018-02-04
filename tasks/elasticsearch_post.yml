@@ -1,0 +1,10 @@
+---
+- name: Copy Elasticsearch configuration file
+  template:
+    src: "{{ elasticsearch_host_config_file_path }}"
+    dest: "{{ elasticsearch_config_file_path }}"
+    owner: root
+    group: root
+    mode: 0644
+  when: elasticsearch_config_check.stat.exists
+  notify: Restart Elasticsearch
