@@ -4,3 +4,9 @@
     name: "{{ elasticsearch_apt_package }}"
     state: present
     update_cache: yes
+
+- name: Ensure service enabled
+  service:
+    name: elasticsearch
+    enabled: yes
+    state: started
