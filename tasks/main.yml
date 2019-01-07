@@ -14,3 +14,4 @@
     - elasticsearch-config
 
 - include_tasks: elasticsearch_activate.yml
+  when: elasticsearch_license_check.stat.exists
