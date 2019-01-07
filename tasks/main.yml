@@ -12,3 +12,5 @@
   - include_tasks: elasticsearch_post.yml
   tags:
     - elasticsearch-config
+
+- include_tasks: elasticsearch_activate.yml
