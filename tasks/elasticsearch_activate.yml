@@ -1,5 +1,4 @@
 ---
-- debug: var=elasticsearch_license_check
 
 - name: Check current Elastic license
   uri:
@@ -8,8 +7,6 @@
     return_content: yes
   register: license_current
   ignore_errors: yes
-
-- debug: var=license_current
 
 - name: Activate Elastic license
   uri:
