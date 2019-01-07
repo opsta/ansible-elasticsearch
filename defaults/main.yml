@@ -6,5 +6,8 @@ elasticsearch_host_config_file_path: "{{ elasticsearch_host_config_path | defaul
 elasticsearch_config_file_path: /etc/elasticsearch/elasticsearch.yml
 elasticsearch_config_path: /etc/elasticsearch
 
+elasticsearch_host_license_file_path: "{{ elasticsearch_host_config_path | default(inventory_hostname) }}/license.json"
+elasticsearch_license_file_path: /etc/elasticsearch/license.json
+
 elasticsearch_apt_key_url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
 elasticsearch_apt_repo: deb https://artifacts.elastic.co/packages/6.x/apt stable main

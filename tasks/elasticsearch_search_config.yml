@@ -28,3 +28,10 @@
   become: false
   delegate_to: 127.0.0.1
   register: elasticsearch_config_check
+
+- name: Check if Elasticsearch license file is exists
+  stat:
+    path: "{{ elasticsearch_host_license_file_path }}"
+  become: false
+  delegate_to: 127.0.0.1
+  register: elasticsearch_license_check
