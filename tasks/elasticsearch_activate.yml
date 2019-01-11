@@ -1,5 +1,10 @@
 ---
 
+- name: Wait for Elasticsearch service to become available
+  wait_for:
+    port: 9200
+    delay: 10
+
 - name: Check current Elastic license
   uri:
     url: "http://localhost:9200/_xpack/license" 
