@@ -3,6 +3,7 @@
   include_vars: "{{ item }}"
   with_first_found:
     - "{{ ansible_os_family }}.yml"
+- debug: var=hostvars[inventory_hostname]['ansible_fqdn']
 
 - include_tasks: elasticsearch_pre.yml
 - include_tasks: elasticsearch_install.yml
@@ -13,5 +14,5 @@
   tags:
     - elasticsearch-config
 
-- include_tasks: elasticsearch_activate.yml
-  when: elasticsearch_license_check.stat.exists
+#- include_tasks: elasticsearch_activate.yml
+#  when: elasticsearch_license_check.stat.exists

@@ -1,4 +1,24 @@
 ---
+- name: Install X-Pack
+  become: True
+  command: >
+    /usr/share/elasticsearch/bin/elasticsearch-plugin install -s -b x-pack
+  ignore_errors: True
+- name: Copy Elasticsearch SSL Key
+  copy:
+    src: "{{ elasticsearch_host_sslkey_file_path }}"
+    dest: "{{  elasticsearch_sslkey_file_path }}"
+  when: elastic_sslkey_check.stat.exists and elastic_sslcert_check.stat.exists
+- name: Copy Elasticsearch SSL Cert
+  copy:
+    src: "{{ elasticsearch_host_sslcert_file_path }}"
+    dest: "{{  elasticsearch_sslcert_file_path }}"
+  when: elastic_sslkey_check.stat.exists and elastic_sslcert_check.stat.exists
+- name: Copy Elasticsearch CA SSL Key
+  copy:
+    src: "{{ elasticsearch_host_ca_file_path }}"
+    dest: "{{  elasticsearch_ca_file_path }}"
+  when: elastic_sslca_check.stat.exists
 - name: Copy Elasticsearch configuration file
   template:
     src: "{{ elasticsearch_host_config_file_path }}"
