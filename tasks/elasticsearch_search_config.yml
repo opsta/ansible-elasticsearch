@@ -36,23 +36,23 @@
   delegate_to: 127.0.0.1
   register: elasticsearch_license_check
 
-- name: Check if SSL Key file is exists
+- name: Check if Elasticsearch SSL private key file is exists
   stat:
-    path: "{{ elasticsearch_host_sslkey_file_path }}"
+    path: "{{ elasticsearch_host_ssl_key_file_path }}"
   become: false
   delegate_to: 127.0.0.1
-  register: elastic_sslkey_check
+  register: elasticsearch_ssl_key_check
 
-- name: Check if SSL Cert file is exists
+- name: Check if Elasticsearch SSL certificate file is exists
   stat:
-    path: "{{ elasticsearch_host_sslcert_file_path }}"
+    path: "{{ elasticsearch_host_ssl_cert_file_path }}"
   become: false
   delegate_to: 127.0.0.1
-  register: elastic_sslcert_check
+  register: elasticsearch_ssl_cert_check
 
-- name: Check if SSL RootCA
+- name: Check if Elasticsearch SSL CA file is exists
   stat:
-    path: "{{ elasticsearch_host_ca_file_path }}"
+    path: "{{ elasticsearch_host_ssl_ca_file_path }}"
   become: false
   delegate_to: 127.0.0.1
-  register: elastic_sslca_check
+  register: elasticsearch_ssl_ca_check

@@ -1,8 +1,8 @@
 ---
-- name: Add elasticsearch repository key
+- name: Add Elasticsearch repository key
   apt_key:
     url: "{{ elasticsearch_apt_key_url }}"
 
-- name: Add elasticsearch apt-repository
+- name: Add Elasticsearch apt repository
   apt_repository:
     repo: "{{ elasticsearch_apt_repo }}"

@@ -1,4 +1,5 @@
 ---
+elasticsearch_major_version: 6
 elasticsearch_search_config_path: "{{ playbook_dir }}/files/groups/{{ item }}/elasticsearch"
 elasticsearch_search_config_paths: []
 
@@ -7,16 +8,18 @@ elasticsearch_config_file_path: /etc/elasticsearch/elasticsearch.yml
 elasticsearch_config_path: /etc/elasticsearch
 
 elasticsearch_host_license_file_path: "{{ elasticsearch_host_config_path | default(inventory_hostname) }}/license.json"
-elasticsearch_license_file_path: /etc/elasticsearch/license.json
 
-elasticsearch_ssl_config: True
-elasticsearch_host_sslkey_file_path: "{{ elasticsearch_host_config_path | default(inventory_hostname) }}/privkey-1547633521.pem"
-elasticsearch_host_sslcert_file_path: "{{ elasticsearch_host_config_path | default(inventory_hostname) }}/fullchain-1547633521.pem"
-elasticsearch_host_ca_file_path: "{{ elasticsearch_host_config_path | default(inventory_hostname) }}/ca.crt"
+elasticsearch_ssl_config: false
+elasticsearch_ssl_transport_enabled: true
+elasticsearch_ssl_http_enabled: true
 
-elasticsearch_sslkey_file_path: "{{elasticsearch_config_path}}/privkey-1547633521.pem"
-elasticsearch_sslcert_file_path: "{{elasticsearch_config_path}}/fullchain-1547633521.pem"
-elasticsearch_ca_file_path: "{{elasticsearch_config_path}}/ca.crt"
+elasticsearch_host_ssl_key_file_path: "{{ elasticsearch_host_config_path | default(inventory_hostname) }}/certificate.key"
+elasticsearch_host_ssl_cert_file_path: "{{ elasticsearch_host_config_path | default(inventory_hostname) }}/certificate.crt"
+elasticsearch_host_ssl_ca_file_path: "{{ elasticsearch_host_config_path | default(inventory_hostname) }}/ca.crt"
+elasticsearch_ssl_key_file_path: /etc/elasticsearch/ssl/certificate.key
+elasticsearch_ssl_cert_file_path: /etc/elasticsearch/ssl/certificate.crt
+elasticsearch_ssl_ca_file_path: /etc/elasticsearch/ssl/ca.crt
+elasticsearch_ssl_path: /etc/elasticsearch/ssl
 
 elasticsearch_apt_key_url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
-elasticsearch_apt_repo: deb https://artifacts.elastic.co/packages/5.x/apt stable main
+elasticsearch_apt_repo: deb https://artifacts.elastic.co/packages/{{ elasticsearch_major_version }}.x/apt stable main

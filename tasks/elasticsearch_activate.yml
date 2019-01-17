@@ -2,30 +2,57 @@
 
 - name: Wait for Elasticsearch service to become available
   wait_for:
+    host: "{{ ansible_default_ipv4.address }}"
     port: 9200
-    delay: 10
+    delay: 5
 
-- name: Check current Elastic license
-  uri:
-    url: "http://localhost:9200/_xpack/license" 
-    method: GET
-    return_content: yes
-  register: license_current
-  ignore_errors: yes
-
-- name: Activate Elastic license
+- name: Activate Elasticsearch license (SSL disabled)
   uri:
     method: PUT
-    url: "http://localhost:9200/_xpack/license?acknowledge=true"
+    url: "http://{{ ansible_default_ipv4.address }}:9200/_xpack/license?acknowledge=true"
     body_format: json
     body: "{{ lookup('file', elasticsearch_host_license_file_path )  }}"
     return_content: yes
-  register: license_activated
-  no_log: False
+  register: elasticsearch_license_activated
+  when: not elasticsearch_ssl_enabled
   failed_when: >
-    license_activated.status != 200 or
-    license_activated.json.license_status is not defined or
-    license_activated.json.license_status != 'valid'
+    elasticsearch_license_activated.status != 200 or
+    elasticsearch_license_activated.json.license_status is not defined or
+    elasticsearch_license_activated.json.license_status != 'valid'
 
-- debug:
-    msg: "License: {{ license_activated }}"
+- name: Activate Elasticsearch license (SSL HTTP disabled)
+  uri:
+    method: PUT
+    url: "http://{{ ansible_fqdn }}:9200/_xpack/license?acknowledge=true"
+    body_format: json
+    body: "{{ lookup('file', elasticsearch_host_license_file_path )  }}"
+    return_content: yes
+    user: "{{ elasticsearch_xpack_username | default('elastic') }}"
+    password: "{{ elasticsearch_xpack_password | default('changeme') }}"
+  register: elasticsearch_license_activated
+  when: > 
+    elasticsearch_ssl_enabled and 
+    not elasticsearch_ssl_http_enabled
+  failed_when: >
+    elasticsearch_license_activated.status != 200 or
+    elasticsearch_license_activated.json.license_status is not defined or
+    elasticsearch_license_activated.json.license_status != 'valid'
+
+- name: Activate Elasticsearch license (SSL HTTP enabled)
+  uri:
+    method: PUT
+    url: "https://{{ ansible_fqdn }}:9200/_xpack/license?acknowledge=true"
+    body_format: json
+    body: "{{ lookup('file', elasticsearch_host_license_file_path )  }}"
+    return_content: yes
+    user: "{{ elasticsearch_xpack_username | default('elastic') }}"
+    password: "{{ elasticsearch_xpack_password | default('changeme') }}"
+  register: elasticsearch_license_activated
+  when: > 
+    elasticsearch_ssl_enabled and 
+    elasticsearch_ssl_http_enabled
+  ignore_errors: true
+  failed_when: >
+    elasticsearch_license_activated.status != 200 or
+    elasticsearch_license_activated.json.license_status is not defined or
+    elasticsearch_license_activated.json.license_status != 'valid'
