@@ -1,4 +1,53 @@
 ---
+- name: Install Elasticsearch X-Pack plugin (For version 5.x only)
+  shell: "/usr/share/elasticsearch/bin/elasticsearch-plugin install -s -b x-pack"
+  when: >
+    elasticsearch_ssl_enabled and 
+    elasticsearch_major_version == 5
+  register: elasticsearch_xpack
+  failed_when:
+    - "elasticsearch_xpack.stdout != \"\""
+    - "elasticsearch_xpack.stdout != \"ERROR: plugin directory [/usr/share/elasticsearch/plugins/x-pack] already exists; if you need to update the plugin, uninstall it first using command 'remove x-pack'\""
+
+- name: Create Elasticsearch SSL folder
+  file:
+    path: "{{ elasticsearch_ssl_path }}"
+    state: directory
+    owner: elasticsearch
+    group: elasticsearch
+    mode: 0700
+  when: elasticsearch_ssl_enabled
+
+- name: Copy Elasticsearch SSL private key file
+  copy:
+    src: "{{ elasticsearch_host_ssl_key_file_path }}"
+    dest: "{{  elasticsearch_ssl_key_file_path }}"
+    owner: elasticsearch
+    group: elasticsearch
+    mode: 0600
+  when: elasticsearch_ssl_enabled and elasticsearch_ssl_key_check.stat.exists and elasticsearch_ssl_cert_check.stat.exists
+  notify: Restart Elasticsearch
+
+- name: Copy Elasticsearch SSL certificate file
+  copy:
+    src: "{{ elasticsearch_host_ssl_cert_file_path }}"
+    dest: "{{  elasticsearch_ssl_cert_file_path }}"
+    owner: elasticsearch
+    group: elasticsearch
+    mode: 0600
+  when: elasticsearch_ssl_enabled and elasticsearch_ssl_key_check.stat.exists and elasticsearch_ssl_cert_check.stat.exists
+  notify: Restart Elasticsearch
+
+- name: Copy Elasticsearch CA file
+  copy:
+    src: "{{ elasticsearch_host_ssl_ca_file_path }}"
+    dest: "{{  elasticsearch_ssl_ca_file_path }}"
+    owner: elasticsearch
+    group: elasticsearch
+    mode: 0600
+  when: elasticsearch_ssl_enabled and elasticsearch_ssl_ca_check.stat.exists
+  notify: Restart Elasticsearch
+
 - name: Copy Elasticsearch configuration file
   template:
     src: "{{ elasticsearch_host_config_file_path }}"
@@ -8,3 +57,5 @@
     mode: 0644
   when: elasticsearch_config_check.stat.exists
   notify: Restart Elasticsearch
+  
+- meta: flush_handlers
