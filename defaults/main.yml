@@ -9,7 +9,7 @@ elasticsearch_config_path: /etc/elasticsearch
 
 elasticsearch_host_license_file_path: "{{ elasticsearch_host_config_path | default(inventory_hostname) }}/license.json"
 
-elasticsearch_ssl_config: false
+elasticsearch_ssl_enabled: false
 elasticsearch_ssl_transport_enabled: true
 elasticsearch_ssl_http_enabled: true
 
