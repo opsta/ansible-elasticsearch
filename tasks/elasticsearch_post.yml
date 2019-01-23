@@ -1,9 +1,7 @@
 ---
 - name: Install Elasticsearch X-Pack plugin (For version 5.x only)
   shell: "/usr/share/elasticsearch/bin/elasticsearch-plugin install -s -b x-pack"
-  when: >
-    elasticsearch_ssl_enabled and 
-    elasticsearch_major_version == 5
+  when: elasticsearch_major_version == 5
   register: elasticsearch_xpack
   failed_when:
     - "elasticsearch_xpack.stdout != \"\""
