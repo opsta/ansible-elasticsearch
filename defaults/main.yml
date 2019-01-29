@@ -1,5 +1,11 @@
 ---
 elasticsearch_major_version: 6
+elasticsearch_apt_key_url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+elasticsearch_apt_repo: deb https://artifacts.elastic.co/packages/{{ elasticsearch_major_version }}.x/apt stable main
+
+elasticsearch_data_path: /var/lib/elasticsearch
+elasticsearch_log_path: /var/log/elasticsearch
+
 elasticsearch_search_config_path: "{{ playbook_dir }}/files/groups/{{ item }}/elasticsearch"
 elasticsearch_search_config_paths: []
 
@@ -20,6 +26,3 @@ elasticsearch_ssl_key_file_path: /etc/elasticsearch/ssl/certificate.key
 elasticsearch_ssl_cert_file_path: /etc/elasticsearch/ssl/certificate.crt
 elasticsearch_ssl_ca_file_path: /etc/elasticsearch/ssl/ca.crt
 elasticsearch_ssl_path: /etc/elasticsearch/ssl
-
-elasticsearch_apt_key_url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
-elasticsearch_apt_repo: deb https://artifacts.elastic.co/packages/{{ elasticsearch_major_version }}.x/apt stable main

@@ -1,5 +1,4 @@
 ---
-
 - name: Wait for Elasticsearch service to become available
   wait_for:
     host: "{{ ansible_default_ipv4.address }}"
