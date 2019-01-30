@@ -26,3 +26,6 @@ elasticsearch_ssl_key_file_path: /etc/elasticsearch/ssl/certificate.key
 elasticsearch_ssl_cert_file_path: /etc/elasticsearch/ssl/certificate.crt
 elasticsearch_ssl_ca_file_path: /etc/elasticsearch/ssl/ca.crt
 elasticsearch_ssl_path: /etc/elasticsearch/ssl
+
+elasticsearch_min_heap_size: 2g
+elasticsearch_max_heap_size: 2g

@@ -55,5 +55,14 @@
     mode: 0644
   when: elasticsearch_config_check.stat.exists
   notify: Restart Elasticsearch
-  
+
+- name: Copy Elasticsearch jvm options file
+  template:
+    src: "jvm.options.j2"
+    dest: "{{ elasticsearch_config_path }}/jvm.options.j2"
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart Elasticsearch
+
 - meta: flush_handlers
