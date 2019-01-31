@@ -1,0 +1,60 @@
+---
+- name: Wait for Elasticsearch service to become available
+  wait_for:
+    host: "{{ ansible_default_ipv4.address }}"
+    port: 9200
+    delay: 5
+
+- name: Check if elastic default password can authenticate (SSL disabled)
+  uri:
+    method: GET
+    url: "http://{{ ansible_default_ipv4.address }}:9200/_xpack/security/_authenticate"
+    return_content: true
+    # Using default user
+    user: elastic
+    password: changeme
+    status_code: [200, 401]
+  register: elasticsearch_user_check
+  when: not elasticsearch_ssl_enabled
+
+- name: Check if elastic default password can authenticate (SSL enabled)
+  uri:
+    method: GET
+    url: "https://{{ ansible_fqdn }}:9200/_xpack/security/_authenticate"
+    return_content: true
+    # Using default user
+    user: elastic
+    password: changeme
+    status_code: [200, 401]
+    validate_certs: true
+  register: elasticsearch_user_check
+  when: elasticsearch_ssl_enabled
+
+- name: Update elastic user on Elasticsearch (SSL HTTP disabled)
+  uri:
+    method: PUT
+    url: "http://{{ ansible_default_ipv4.address }}:9200/_xpack/security/user/elastic/_password"
+    body_format: json
+    body: "{\"password\":\"{{ elasticsearch_password }}\"}"
+    return_content: true
+    # Using default user
+    user: elastic
+    password: changeme
+  when:
+    not elasticsearch_ssl_enabled and
+    elasticsearch_user_check.status == 200
+
+- name: Update elastic user on Elasticsearch (SSL HTTP enabled)
+  uri:
+    method: PUT
+    url: "https://{{ ansible_fqdn }}:9200/_xpack/security/user/elastic/_password"
+    body_format: json
+    body: "{\"password\":\"{{ elasticsearch_password }}\"}"
+    return_content: true
+    # Using default user
+    user: elastic
+    password: changeme
+    validate_certs: true
+  when:
+    elasticsearch_ssl_enabled and
+    elasticsearch_user_check.status == 200

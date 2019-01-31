@@ -43,8 +43,20 @@
     owner: elasticsearch
     group: elasticsearch
     mode: 0600
+  register: elasticsearch_ssl_ca_file
   when: elasticsearch_ssl_enabled and elasticsearch_ssl_ca_check.stat.exists
   notify: Restart Elasticsearch
+
+- name: Symlink Elasticsearch CA file to system CA directory
+  file:
+    src: "{{ elasticsearch_ssl_ca_file_path }}"
+    dest: "/etc/ssl/certs/elasticsearch-ca.crt"
+    state: link
+  when: elasticsearch_ssl_ca_file.changed and elasticsearch_ssl_enabled and elasticsearch_ssl_ca_check.stat.exists
+
+- name: Update CA index file
+  shell: update-ca-certificates --fresh
+  when: elasticsearch_ssl_ca_file.changed
 
 - name: Copy Elasticsearch configuration file
   template:
@@ -59,7 +71,7 @@
 - name: Copy Elasticsearch jvm options file
   template:
     src: "jvm.options.j2"
-    dest: "{{ elasticsearch_config_path }}/jvm.options.j2"
+    dest: "{{ elasticsearch_config_path }}/jvm.options"
     owner: root
     group: root
     mode: 0644

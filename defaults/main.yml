@@ -5,6 +5,8 @@ elasticsearch_apt_repo: deb https://artifacts.elastic.co/packages/{{ elasticsear
 
 elasticsearch_data_path: /var/lib/elasticsearch
 elasticsearch_log_path: /var/log/elasticsearch
+elasticsearch_http_port: 9200
+elasticsearch_transport_port: 9300-9400
 
 elasticsearch_search_config_path: "{{ playbook_dir }}/files/groups/{{ item }}/elasticsearch"
 elasticsearch_search_config_paths: []
@@ -27,5 +29,6 @@ elasticsearch_ssl_cert_file_path: /etc/elasticsearch/ssl/certificate.crt
 elasticsearch_ssl_ca_file_path: /etc/elasticsearch/ssl/ca.crt
 elasticsearch_ssl_path: /etc/elasticsearch/ssl
 
+elasticsearch_password: CHANGEME
 elasticsearch_min_heap_size: 2g
 elasticsearch_max_heap_size: 2g
