@@ -23,7 +23,10 @@
     owner: elasticsearch
     group: elasticsearch
     mode: 0600
-  when: elasticsearch_ssl_enabled and elasticsearch_ssl_key_check.stat.exists and elasticsearch_ssl_cert_check.stat.exists
+  when: 
+    - elasticsearch_ssl_enabled
+    - elasticsearch_ssl_key_check.stat.exists
+    - elasticsearch_ssl_cert_check.stat.exists
   notify: Restart Elasticsearch
 
 - name: Copy Elasticsearch SSL certificate file
@@ -33,7 +36,10 @@
     owner: elasticsearch
     group: elasticsearch
     mode: 0600
-  when: elasticsearch_ssl_enabled and elasticsearch_ssl_key_check.stat.exists and elasticsearch_ssl_cert_check.stat.exists
+  when:
+    - elasticsearch_ssl_enabled
+    - elasticsearch_ssl_key_check.stat.exists
+    - elasticsearch_ssl_cert_check.stat.exists
   notify: Restart Elasticsearch
 
 - name: Copy Elasticsearch CA file
@@ -44,7 +50,9 @@
     group: elasticsearch
     mode: 0600
   register: elasticsearch_ssl_ca_file
-  when: elasticsearch_ssl_enabled and elasticsearch_ssl_ca_check.stat.exists
+  when:
+    - elasticsearch_ssl_enabled
+    - elasticsearch_ssl_ca_check.stat.exists
   notify: Restart Elasticsearch
 
 - name: Symlink Elasticsearch CA file to system CA directory
@@ -52,7 +60,10 @@
     src: "{{ elasticsearch_ssl_ca_file_path }}"
     dest: "/etc/ssl/certs/elasticsearch-ca.crt"
     state: link
-  when: elasticsearch_ssl_ca_file.changed and elasticsearch_ssl_enabled and elasticsearch_ssl_ca_check.stat.exists
+  when:
+    - elasticsearch_ssl_ca_file.changed
+    - elasticsearch_ssl_enabled
+    - elasticsearch_ssl_ca_check.stat.exists
 
 - name: Update CA index file
   shell: update-ca-certificates --fresh
