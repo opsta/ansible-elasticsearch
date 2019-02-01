@@ -41,6 +41,46 @@ Also with various configuration:
 
 ## Example Inventory
 
+### SSL HTTP Disabled
+
+- Standalone
+```ini
+[elasticsearch]
+elasticsearch ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
+```
+- All in one cluster (SSL HTTP Disabled)
+```ini
+elasticsearch-1 ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
+elasticsearch-2 ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
+elasticsearch-3 ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
+
+[elasticsearch]
+elasticsearch-1
+elasticsearch-2
+elasticsearch-3
+```
+- Multiple roles cluster (SSL HTTP Disabled)
+```ini
+elasticsearch-master-1 ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
+elasticsearch-master-2 ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
+elasticsearch-master-3 ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
+elasticsearch-data-1 ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
+elasticsearch-data-2 ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
+kibana ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
+
+[elasticsearch-master]
+elasticsearch-master-1
+elasticsearch-master-2
+elasticsearch-master-3
+
+[elasticsearch-data]
+elasticsearch-data-1
+elasticsearch-data-2
+
+[elasticsearch-client]
+kibana
+```
+
 - Standalone
 ```ini
 [elasticsearch]
