@@ -14,7 +14,7 @@ Also with various configuration:
 
 ## Requirements
 
-- If you install with SSL HTTP enabled. The target master host will need to have full FQDN set otherwise change password task will fail since it require domain to connect. I have already updated inventory example in description.
+- If you install with SSL HTTP enabled. The target hosts will need to have **full FQDN*** set. Otherwise both change password and activate license task will fail since it require domain to connect. I have already updated inventory example in description.
 
 ## Role Variables
 
@@ -40,8 +40,6 @@ Also with various configuration:
 - https://github.com/opsta/ansible-java
 
 ## Example Inventory
-
-### SSL HTTP Disabled
 
 - Standalone
 ```ini
@@ -81,45 +79,7 @@ elasticsearch-data-2
 kibana
 ```
 
-### SSL HTTP Enabled
-
-- Standalone
-```ini
-[elasticsearch]
-elasticsearch.example.com ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
-```
-- All in one cluster
-```ini
-elasticsearch-1.example.com ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
-elasticsearch-2.example.com ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
-elasticsearch-3.example.com ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
-
-[elasticsearch]
-elasticsearch-1.example.com
-elasticsearch-2.example.com
-elasticsearch-3.example.com
-```
-- Multiple roles cluster
-```ini
-elasticsearch-master-1.example.com ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
-elasticsearch-master-2.example.com ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
-elasticsearch-master-3.example.com ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
-elasticsearch-data-1.example.com ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
-elasticsearch-data-2.example.com ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
-kibana.example.com ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
-
-[elasticsearch-master]
-elasticsearch-master-1.example.com
-elasticsearch-master-2.example.com
-elasticsearch-master-3.example.com
-
-[elasticsearch-data]
-elasticsearch-data-1.example.com
-elasticsearch-data-2.example.com
-
-[elasticsearch-client]
-kibana.example.com
-```
+**Remark:** If you install with SSL HTTP enabled. The target hosts will need to have **full FQDN**. Otherwise both change password and activate license task will fail since it require domain to connect.
 
 ## Example Playbook
 ```yaml
