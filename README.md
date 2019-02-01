@@ -81,42 +81,44 @@ elasticsearch-data-2
 kibana
 ```
 
+### SSL HTTP Enabled
+
 - Standalone
 ```ini
 [elasticsearch]
-elasticsearch ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
+elasticsearch.example.com ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
 ```
 - All in one cluster
 ```ini
-elasticsearch-1 ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
-elasticsearch-2 ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
-elasticsearch-3 ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
+elasticsearch-1.example.com ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
+elasticsearch-2.example.com ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
+elasticsearch-3.example.com ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
 
 [elasticsearch]
-elasticsearch-1
-elasticsearch-2
-elasticsearch-3
+elasticsearch-1.example.com
+elasticsearch-2.example.com
+elasticsearch-3.example.com
 ```
 - Multiple roles cluster
 ```ini
-elasticsearch-master-1 ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
-elasticsearch-master-2 ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
-elasticsearch-master-3 ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
-elasticsearch-data-1 ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
-elasticsearch-data-2 ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
-kibana ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
+elasticsearch-master-1.example.com ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
+elasticsearch-master-2.example.com ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
+elasticsearch-master-3.example.com ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
+elasticsearch-data-1.example.com ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
+elasticsearch-data-2.example.com ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
+kibana.example.com ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
 
 [elasticsearch-master]
-elasticsearch-master-1
-elasticsearch-master-2
-elasticsearch-master-3
+elasticsearch-master-1.example.com
+elasticsearch-master-2.example.com
+elasticsearch-master-3.example.com
 
 [elasticsearch-data]
-elasticsearch-data-1
-elasticsearch-data-2
+elasticsearch-data-1.example.com
+elasticsearch-data-2.example.com
 
 [elasticsearch-client]
-kibana
+kibana.example.com
 ```
 
 ## Example Playbook
