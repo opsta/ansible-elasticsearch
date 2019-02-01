@@ -48,7 +48,7 @@ Also with various configuration:
 [elasticsearch]
 elasticsearch ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
 ```
-- All in one cluster (SSL HTTP Disabled)
+- All in one cluster
 ```ini
 elasticsearch-1 ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
 elasticsearch-2 ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
@@ -59,7 +59,7 @@ elasticsearch-1
 elasticsearch-2
 elasticsearch-3
 ```
-- Multiple roles cluster (SSL HTTP Disabled)
+- Multiple roles cluster
 ```ini
 elasticsearch-master-1 ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
 elasticsearch-master-2 ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
