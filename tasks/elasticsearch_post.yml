@@ -71,12 +71,11 @@
 
 - name: Copy Elasticsearch configuration file
   template:
-    src: "{{ elasticsearch_host_config_file_path }}"
+    src: "elasticsearch.yml.j2"
     dest: "{{ elasticsearch_config_file_path }}"
     owner: root
     group: root
     mode: 0644
-  when: elasticsearch_config_check.stat.exists
   notify: Restart Elasticsearch
 
 - name: Copy Elasticsearch jvm options file
