@@ -12,7 +12,6 @@ elasticsearch_transport_port: 9300-9400
 elasticsearch_search_config_path: "{{ playbook_dir }}/files/groups/{{ item }}/elasticsearch"
 elasticsearch_search_config_paths: []
 
-elasticsearch_host_config_file_path: "{{ elasticsearch_host_config_path | default(inventory_hostname) }}/elasticsearch.yml.j2"
 elasticsearch_config_file_path: /etc/elasticsearch/elasticsearch.yml
 elasticsearch_config_path: /etc/elasticsearch
 

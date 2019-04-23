@@ -6,11 +6,12 @@
   - include_tasks: elasticsearch_search_config.yml
   - include_tasks: elasticsearch_post.yml
   - include_tasks: elasticsearch_user.yml
-    when: inventory_hostname in groups['elasticsearch-master'] or groups['elasticsearch']|default([]) | length == 1
+    when:
+      - inventory_hostname in groups['elasticsearch-master'] | default([]) or groups['elasticsearch'] | default([]) | length == 1
+      - elasticsearch_license_check.stat.exists
   - include_tasks: elasticsearch_activate.yml
     when:
-      - inventory_hostname in groups['elasticsearch-master'] or groups['elasticsearch']|default([]) | length == 1
+      - inventory_hostname in groups['elasticsearch-master'] | default([]) or groups['elasticsearch'] | default([]) | length == 1
       - elasticsearch_license_check.stat.exists
-      - elasticsearch_major_version == 5
   tags:
     - elasticsearch-config
