@@ -1,5 +1,5 @@
 ---
-elasticsearch_major_version: 6
+elasticsearch_major_version: 7
 elasticsearch_package_name: elasticsearch
 elasticsearch_service_name: elasticsearch
 
