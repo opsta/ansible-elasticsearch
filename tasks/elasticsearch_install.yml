@@ -1,12 +1,19 @@
 ---
-- name: Install Elasticsearch
+- name: Install Elasticsearch (Ubuntu/Debian)
   apt:
-    name: "{{ elasticsearch_apt_package }}"
+    name: "{{ elasticsearch_package_name }}"
     state: present
     update_cache: yes
+  when: ansible_os_family == 'Debian'
 
-- name: Ensure service enabled
+- name: Install Elasticsearch (CentOS/RHEL)
+  yum:
+    name: "{{ elasticsearch_package_name }}"
+    state: present
+  when: ansible_os_family == 'RedHat'
+
+- name: Ensure service is enabled
   service:
-    name: elasticsearch
+    name: "{{ elasticsearch_service_name }}"
     enabled: yes
     state: started

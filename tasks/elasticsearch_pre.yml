@@ -1,8 +1,18 @@
 ---
-- name: Add Elasticsearch repository key
+- name: Add Elasticsearch repository key (Ubuntu/Debian)
   apt_key:
     url: "{{ elasticsearch_apt_key_url }}"
+  when: ansible_os_family == 'Debian'
 
-- name: Add Elasticsearch apt repository
+- name: Add Elasticsearch repository (Ubuntu/Debian)
   apt_repository:
     repo: "{{ elasticsearch_apt_repo }}"
+  when: ansible_os_family == 'Debian'
+
+- name: Add Elasticsearch repository (CentOS/RHEL)
+  yum_repository:
+    name: "elasticsearch"
+    description: "Elasticsearch YUM repository"
+    baseurl: "{{ elasticsearch_yum_repo }}"
+    gpgkey: "{{ elasticsearch_yum_key_url }}"
+  when: ansible_os_family == 'RedHat'

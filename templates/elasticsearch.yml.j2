@@ -129,7 +129,7 @@ discovery.zen.minimum_master_nodes: {{ (ansible_play_hosts | length / 2) | int +
 #
 #action.destructive_requires_name: true
 #
-{% if elasticsearch_license_check.stat.exists and not elasticsearch_ssl_enabled %}
+{% if not elasticsearch_license_check.stat.exists and not elasticsearch_ssl_enabled %}
 xpack.security.enabled: false
 {% else %}
 xpack.security.enabled: true
