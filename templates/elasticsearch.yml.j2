@@ -114,7 +114,7 @@ discovery.zen.minimum_master_nodes: {{ (ansible_play_hosts | length / 2) | int +
 {% endif %}
 {% if elasticsearch_major_version == 7 and ansible_play_hosts | length == 1 %}
 #
-# Fix initial master node to itself if running as standalone (For Elasticsearch > 7 only)
+# Fix initial master node to itself if running as standalone (For Elasticsearch >= 7 only)
 #
 cluster.initial_master_nodes: {{ ansible_hostname }}
 {% endif %}
