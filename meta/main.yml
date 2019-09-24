@@ -10,6 +10,10 @@ galaxy_info:
     versions:
     - trusty
     - xenial
+    - bionic
+  - name: EL
+    versions:
+    - 7
   galaxy_tags:
     - Elasticsearch
     - Database
