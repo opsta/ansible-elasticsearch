@@ -112,6 +112,12 @@ discovery.zen.minimum_master_nodes: {{ (groups['elasticsearch-master'] | length 
 {% elif inventory_hostname not in groups['elasticsearch-data']|default([]) and ansible_play_hosts | length > 1 %}
 discovery.zen.minimum_master_nodes: {{ (ansible_play_hosts | length / 2) | int + 1 }}
 {% endif %}
+{% if elasticsearch_major_version == 7 and ansible_play_hosts | length == 1 %}
+#
+# Fix initial master node to itself if running as standalone (For Elasticsearch >= 7 only)
+#
+cluster.initial_master_nodes: {{ ansible_hostname }}
+{% endif %}
 #
 # For more information, consult the zen discovery module documentation.
 #
@@ -129,7 +135,7 @@ discovery.zen.minimum_master_nodes: {{ (ansible_play_hosts | length / 2) | int +
 #
 #action.destructive_requires_name: true
 #
-{% if elasticsearch_license_check.stat.exists and not elasticsearch_ssl_enabled %}
+{% if not elasticsearch_license_check.stat.exists and not elasticsearch_ssl_enabled %}
 xpack.security.enabled: false
 {% else %}
 xpack.security.enabled: true

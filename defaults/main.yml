@@ -1,8 +1,13 @@
 ---
-elasticsearch_major_version: 6
+elasticsearch_major_version: 7
+elasticsearch_package_name: elasticsearch
+elasticsearch_service_name: elasticsearch
+
 elasticsearch_apt_key_url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
-elasticsearch_apt_repo: deb https://artifacts.elastic.co/packages/{{ elasticsearch_major_version }}.x/apt stable main
-elasticsearch_apt_package: elasticsearch
+elasticsearch_apt_repo: "deb https://artifacts.elastic.co/packages/{{ elasticsearch_major_version }}.x/apt stable main"
+
+elasticsearch_yum_repo: "https://artifacts.elastic.co/packages/{{ elasticsearch_major_version }}.x/yum"
+elasticsearch_yum_key_url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
 
 elasticsearch_data_path: /var/lib/elasticsearch
 elasticsearch_log_path: /var/log/elasticsearch
