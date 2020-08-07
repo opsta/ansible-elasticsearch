@@ -1,0 +1,25 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: delegated
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+  flake8
+platforms:
+  - name: ubuntu-bionic
+  - name: ubuntu-focal
+  - name: centos-7
+  - name: centos-8
+provisioner:
+  name: ansible
+  playbooks:
+    delegated:
+      create: lxd-create.yml
+      destroy: lxd-destroy.yml
+      converge: lxd-converge.yml
+      verify: lxd-verify.yml
+verifier:
+  name: ansible

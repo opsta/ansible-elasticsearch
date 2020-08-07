@@ -1,0 +1,6 @@
+---
+lxd_single_node:
+  ubuntu-bionic: ubuntu/bionic/amd64
+  ubuntu-focal: ubuntu/focal/amd64
+  centos-7: centos/7/amd64
+  centos-8: centos/8/amd64

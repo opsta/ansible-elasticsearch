@@ -1,0 +1,8 @@
+---
+- name: Converge
+  hosts: all
+  connection: lxd
+  tasks:
+    - name: "Include ansible-elasticsearch"
+      include_role:
+        name: "ansible-elasticsearch"

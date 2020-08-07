@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  connection: local
+  tasks:
+    - name: Include variables
+      include_vars: lxd-variables.yml
+
+    - name: Delete a container
+      lxd_container:
+        name: "{{ item.key }}"
+        state: absent
+      loop: "{{ lxd_single_node|dict2items }}"

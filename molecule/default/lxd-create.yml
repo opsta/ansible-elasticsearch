@@ -1,0 +1,43 @@
+---
+- name: Create LXD Containers and add host group
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Include variables
+      include_vars: lxd-variables.yml
+
+    - name: Create LXD container
+      lxd_container:
+        name: "{{ item.key }}"
+        state: started
+        source:
+          type: image
+          mode: pull
+          server: https://images.linuxcontainers.org
+          protocol: lxd # if you get a 404, try setting protocol: simplestreams
+          alias: "{{ item.value }}"
+        profiles: ["default"]
+        wait_for_ipv4_addresses: true
+        timeout: 600
+      loop: "{{ lxd_single_node|dict2items }}"
+
+    - name: Add LXD Container to host group
+      add_host:
+        hostname: "{{ item.key }}"
+        ansible_connection: lxd
+        groups:
+        - lxd_single_node
+      loop: "{{ lxd_single_node|dict2items }}"
+
+
+- name: Initial LXD Containers
+  hosts: lxd_single_node
+  connection: lxd
+  tasks:
+    - name: install required packages
+      package:
+        name:
+          - python3-apt
+          - gnupg
+        state: present
+      when: ansible_os_family == 'Debian'
