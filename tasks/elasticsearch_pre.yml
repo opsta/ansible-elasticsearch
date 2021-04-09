@@ -15,4 +15,22 @@
     description: "Elasticsearch YUM repository"
     baseurl: "{{ elasticsearch_yum_repo }}"
     gpgkey: "{{ elasticsearch_yum_key_url }}"
-  when: ansible_os_family == 'RedHat'
+  when:
+    - ansible_os_family == 'RedHat'
+    - not elasticsearch_offline_install
+
+- block:
+  - name: Add Elasticsearch repository from template (CentOS/RHEL)
+    template:
+      src: "{{ elasticsearch_yum_repo_template }}"
+      dest: "/etc/yum.repos.d/{{ elasticsearch_yum_repo_template | basename | regex_replace('\\.j2$', '') }}"
+      force: true
+      backup: true
+    when: ansible_pkg_mgr in ['yum', 'dnf']
+
+  - name: Copy Elasticsearch GPG key
+    copy:
+      src: "{{ elasticsearch_gpg_key_path }}/{{ elasticsearch_gpg_key }}"
+      dest: /etc/pki/rpm-gpg/
+    when: ansible_pkg_mgr in ['yum', 'dnf']
+  when: elasticsearch_offline_install

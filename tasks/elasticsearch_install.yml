@@ -6,14 +6,52 @@
     update_cache: yes
   when: ansible_os_family == 'Debian'
 
+- name: Import Elasticsearch GPG key
+  command: rpm --import /etc/pki/rpm-gpg/{{ elasticsearch_gpg_key }}
+  when: ansible_os_family == 'RedHat' and elasticsearch_offline_install
+
 - name: Install Elasticsearch (CentOS/RHEL)
   yum:
     name: "{{ elasticsearch_package_name }}"
     state: present
   when: ansible_os_family == 'RedHat'
 
+- block: 
+  - name: "Generate systemd file"
+    template:
+      src: elasticsearch.service.j2
+      dest: /etc/systemd/system/elasticsearch.service
+    notify: Restart Elasticsearch
+
+  - name: copy elasticsearch environment config
+    template:
+      src: elasticsearch.j2
+      dest: /etc/sysconfig/elasticsearch
+
+  - name: Ensure directory exist
+    file:
+      path: "{{ item }}"
+      state: directory
+      owner: elasticsearch 
+      group: elasticsearch
+    with_items:
+      - "{{ elasticsearch_data_path }}"
+      - "{{ elasticsearch_log_path }}"
+      - "{{ elasticsearch_config_path }}"
+
+  - name: copy elasticsearch files to new path
+    copy:
+      src: /usr/share/elasticsearch/
+      dest: "{{ elasticsearch_config_path }}"
+      owner: elasticsearch 
+      group: elasticsearch
+      remote_src: yes
+  when: elasticsearch_change_path
+
 - name: Ensure service is enabled
   service:
     name: "{{ elasticsearch_service_name }}"
     enabled: yes
     state: started
+
+

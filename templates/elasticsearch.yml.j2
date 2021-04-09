@@ -48,6 +48,14 @@ node.ingest: true
 #
 #node.attr.rack: r1
 #
+{% if inventory_hostname in groups['elasticsearch-hot']|default([]) -%}
+node.attr.box_type: hot
+{% elif inventory_hostname in groups['elasticsearch-warm']|default([]) -%}
+node.attr.box_type: warm
+{% elif inventory_hostname in groups['elasticsearch-cold']|default([]) -%}
+node.attr.box_type: cold
+{% endif %}
+
 # ----------------------------------- Paths ------------------------------------
 #
 # Path to directory where to store the data (separate multiple locations by comma):
