@@ -7,17 +7,17 @@ After=network-online.target
 [Service]
 RuntimeDirectory=elasticsearch
 PrivateTmp=true
-Environment=ES_HOME={{ elasticsearch_config_path }}
+Environment=ES_HOME={{ elasticsearch_data_path }}
 Environment=ES_PATH_CONF=/etc/elasticsearch
 Environment=PID_DIR=/var/run/elasticsearch
 EnvironmentFile=-/etc/sysconfig/elasticsearch
 
-WorkingDirectory={{ elasticsearch_config_path }}
+WorkingDirectory={{ elasticsearch_data_path }}
 
 User=elasticsearch
 Group=elasticsearch
 
-ExecStart={{ elasticsearch_config_path }}/bin/elasticsearch -p ${PID_DIR}/elasticsearch.pid --quiet
+ExecStart={{ elasticsearch_data_path }}/bin/elasticsearch -p ${PID_DIR}/elasticsearch.pid --quiet
 
 # StandardOutput is configured to redirect to journalctl since
 # some error messages may be logged in standard output before

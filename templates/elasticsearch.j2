@@ -3,7 +3,7 @@
 ################################
 
 # Elasticsearch home directory
-ES_HOME={{ elasticsearch_config_path }}
+ES_HOME={{ elasticsearch_data_path }}
 
 # Elasticsearch Java path
 #JAVA_HOME=
@@ -15,7 +15,7 @@ ES_PATH_CONF=/etc/elasticsearch
 #PID_DIR=/var/run/elasticsearch
 
 # Additional Java OPTS
-ES_JAVA_OPTS="-Djna.tmpdir={{ elasticsearch_config_path }}/tmp"
+ES_JAVA_OPTS="-Djna.tmpdir={{ elasticsearch_data_path }}/tmp"
 
 # Configure restart on package upgrade (true, every other setting will lead to not restarting)
 #RESTART_ON_UPGRADE=true

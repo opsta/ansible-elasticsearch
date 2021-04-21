@@ -26,15 +26,15 @@ node.name: {{ ansible_hostname }}
 #
 # Select node role:
 #
-{% if inventory_hostname in groups['elasticsearch-master']|default([]) -%}
+{% if inventory_hostname in groups['elasticsearch_master']|default([]) -%}
 node.master: true
 node.data: false
 node.ingest: true
-{% elif inventory_hostname in groups['elasticsearch-data']|default([]) -%}
+{% elif inventory_hostname in groups['elasticsearch_data']|default([]) -%}
 node.master: false
 node.data: true
 node.ingest: false
-{% elif inventory_hostname in groups['elasticsearch-client']|default([]) -%}
+{% elif inventory_hostname in groups['elasticsearch_client']|default([]) -%}
 node.master: false
 node.data: false
 node.ingest: false
@@ -48,11 +48,11 @@ node.ingest: true
 #
 #node.attr.rack: r1
 #
-{% if inventory_hostname in groups['elasticsearch-hot']|default([]) -%}
+{% if inventory_hostname in groups['elasticsearch_hot']|default([]) -%}
 node.attr.box_type: hot
-{% elif inventory_hostname in groups['elasticsearch-warm']|default([]) -%}
+{% elif inventory_hostname in groups['elasticsearch_warm']|default([]) -%}
 node.attr.box_type: warm
-{% elif inventory_hostname in groups['elasticsearch-cold']|default([]) -%}
+{% elif inventory_hostname in groups['elasticsearch_cold']|default([]) -%}
 node.attr.box_type: cold
 {% endif %}
 
@@ -115,9 +115,9 @@ discovery.zen.ping.unicast.hosts: [ "{{ "\",\"".join(elasticsearch_cluster_hosts
 #
 # Prevent the "split brain" by configuring the majority of nodes (total number of master-eligible nodes / 2 + 1):
 #
-{% if inventory_hostname in groups['elasticsearch-master']|default([]) %}
-discovery.zen.minimum_master_nodes: {{ (groups['elasticsearch-master'] | length / 2) | int + 1 }}
-{% elif inventory_hostname not in groups['elasticsearch-data']|default([]) and ansible_play_hosts | length > 1 %}
+{% if inventory_hostname in groups['elasticsearch_master']|default([]) %}
+discovery.zen.minimum_master_nodes: {{ (groups['elasticsearch_master'] | length / 2) | int + 1 }}
+{% elif inventory_hostname not in groups['elasticsearch_data']|default([]) and ansible_play_hosts | length > 1 %}
 discovery.zen.minimum_master_nodes: {{ (ansible_play_hosts | length / 2) | int + 1 }}
 {% endif %}
 {% if elasticsearch_major_version == 7 and ansible_play_hosts | length == 1 %}

@@ -42,12 +42,11 @@ elasticsearch_password: CHANGEME
 elasticsearch_min_heap_size: 2g
 elasticsearch_max_heap_size: 2g
 
-# Offline installation
+# Offline installation for Centos
 elasticsearch_offline_install: false
-elasticsearch_baseurl: 
-elasticsearch_gpg_key_path: "{{ playbook_dir }}/files/groups/elasticsearch/key"
+elasticsearch_baseurl: ""
 elasticsearch_gpg_key: ELASTICSEARCH-GPG
 elasticsearch_yum_repo_template: elasticsearch.repo.j2
 
 # enable in case if you change data path & log path
-elasticsearch_change_path: false
+elasticsearch_change_install_path: false

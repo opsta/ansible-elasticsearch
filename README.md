@@ -66,17 +66,26 @@ elasticsearch-data-1 ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
 elasticsearch-data-2 ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
 kibana ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
 
-[elasticsearch-master]
+[elasticsearch_master]
 elasticsearch-master-1
 elasticsearch-master-2
 elasticsearch-master-3
 
-[elasticsearch-data]
+[elasticsearch_data]
 elasticsearch-data-1
 elasticsearch-data-2
 
-[elasticsearch-client]
+[elasticsearch_client]
 kibana
+
+[elasticsearch_hot]
+elasticsearch-data-1
+
+[elasticsearch_warm]
+elasticsearch-data-2
+
+[elasticsearch_cold]
+elasticsearch-data-3
 ```
 
 **Remark:** If you install with SSL HTTP enabled. The target hosts will need to have **full FQDN**. Otherwise both change password and activate license task will fail since it require domain to connect.

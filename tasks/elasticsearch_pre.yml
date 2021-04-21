@@ -26,11 +26,11 @@
       dest: "/etc/yum.repos.d/{{ elasticsearch_yum_repo_template | basename | regex_replace('\\.j2$', '') }}"
       force: true
       backup: true
-    when: ansible_pkg_mgr in ['yum', 'dnf']
 
   - name: Copy Elasticsearch GPG key
-    copy:
-      src: "{{ elasticsearch_gpg_key_path }}/{{ elasticsearch_gpg_key }}"
+    template:
+      src: "{{ elasticsearch_gpg_key }}"
       dest: /etc/pki/rpm-gpg/
-    when: ansible_pkg_mgr in ['yum', 'dnf']
-  when: elasticsearch_offline_install
+  when:
+    - ansible_pkg_mgr in ['yum', 'dnf'] 
+    - elasticsearch_offline_install

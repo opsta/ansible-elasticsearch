@@ -42,16 +42,14 @@
   - name: copy elasticsearch files to new path
     copy:
       src: /usr/share/elasticsearch/
-      dest: "{{ elasticsearch_config_path }}"
+      dest: "{{ elasticsearch_data_path }}"
       owner: elasticsearch 
       group: elasticsearch
       remote_src: yes
-  when: elasticsearch_change_path
+  when: elasticsearch_change_install_path
 
 - name: Ensure service is enabled
   service:
     name: "{{ elasticsearch_service_name }}"
     enabled: yes
     state: started
-
-
