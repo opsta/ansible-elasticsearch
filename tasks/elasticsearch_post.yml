@@ -73,8 +73,8 @@
   template:
     src: "elasticsearch.yml.j2"
     dest: "{{ elasticsearch_config_file_path }}"
-    owner: root
-    group: root
+    owner: elasticsearch
+    group: elasticsearch
     mode: 0644
   notify: Restart Elasticsearch
 
@@ -82,8 +82,8 @@
   template:
     src: "jvm.options.j2"
     dest: "{{ elasticsearch_config_path }}/jvm.options"
-    owner: root
-    group: root
+    owner: elasticsearch
+    group: elasticsearch
     mode: 0644
   notify: Restart Elasticsearch
 
