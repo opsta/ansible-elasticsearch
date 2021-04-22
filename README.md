@@ -1,5 +1,8 @@
 # Ansible Role: Elasticsearch
 
+## Deprecation notice
+As of 22/04/2021 merge the use of group name that use hyphen (-) will change to use underscore (_) instead since hyphen is invalid character for Ansible group name.
+
 This role can install in different node configuration:
 - Standalone
 - Cluster
