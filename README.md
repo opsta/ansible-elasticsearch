@@ -77,6 +77,15 @@ elasticsearch-data-2
 
 [elasticsearch_client]
 kibana
+```
+- Adding storage tier attribute to node
+```ini
+elasticsearch-master-1 ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
+elasticsearch-master-2 ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
+elasticsearch-master-3 ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
+elasticsearch-data-1 ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
+elasticsearch-data-2 ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
+elasticsearch-data-3 ansible_user=ubuntu ansible_host=x.x.x.x ansible_port=22
 
 [elasticsearch_hot]
 elasticsearch-data-1
