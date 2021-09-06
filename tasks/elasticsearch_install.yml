@@ -26,7 +26,7 @@
   - name: copy elasticsearch environment config
     template:
       src: elasticsearch.j2
-      dest: /etc/sysconfig/elasticsearch
+      dest: "{{ elasticsearch_env_path }}"
 
   - name: Ensure directory exist
     file:
