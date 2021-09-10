@@ -10,7 +10,7 @@ PrivateTmp=true
 Environment=ES_HOME={{ elasticsearch_data_path }}
 Environment=ES_PATH_CONF=/etc/elasticsearch
 Environment=PID_DIR=/var/run/elasticsearch
-EnvironmentFile=-/etc/sysconfig/elasticsearch
+EnvironmentFile=-{{ elasticsearch_env_path }}
 
 WorkingDirectory={{ elasticsearch_data_path }}
 
